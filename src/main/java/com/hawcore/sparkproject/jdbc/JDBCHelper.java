@@ -3,12 +3,9 @@ package com.hawcore.sparkproject.jdbc;
 import com.hawcore.sparkproject.conf.ConfigurationManager;
 import com.hawcore.sparkproject.constant.Constants;
 
-import javax.xml.transform.Result;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author fengq
@@ -16,6 +13,7 @@ import java.util.LinkedList;
 public class JDBCHelper {
 
     private static JDBCHelper instance = null;
+
 
     static {
         try {
@@ -106,7 +104,38 @@ public class JDBCHelper {
         }
     }
 
-    interface QueryCallback {
+    public int[] executeBatch(String sql, List<Object[]> paramList) {
+        Connection conn = null;
+        PreparedStatement ps;
+        int[] rtn = null;
+        try {
+            conn = getConnection();
+            conn.setAutoCommit(false);
+
+            ps = conn.prepareStatement(sql);
+            for (Object[] params : paramList) {
+                for (int i = 0; i < params.length; i++) {
+                    ps.setObject(i + 1, params[i]);
+                }
+                ps.addBatch();
+            }
+            rtn = ps.executeBatch();
+            conn.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            release(conn);
+        }
+        return rtn;
+    }
+
+    @FunctionalInterface
+    public interface QueryCallback {
+        /**
+         *
+         * @param rs
+         * @throws Exception
+         */
         void process(ResultSet rs) throws Exception;
     }
 }
