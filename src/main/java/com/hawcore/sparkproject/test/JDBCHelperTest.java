@@ -12,7 +12,7 @@ public class JDBCHelperTest {
     public static void main(String[] args) {
         JDBCHelper jdbcHelper = JDBCHelper.getInstance();
 
-//        jdbcHelper.executeUpdate("insert into t_user_test(name) values(?)", new Object[]{"zhangsan"});
+        jdbcHelper.executeUpdate("insert into t_user_test(name) values(?)", new Object[]{"zhangsan"});
 
 
         jdbcHelper.executeQuery("select * from t_user_test where id>=?", new Object[]{1}, (rs) -> {
