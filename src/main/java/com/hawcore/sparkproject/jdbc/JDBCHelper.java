@@ -27,7 +27,7 @@ public class JDBCHelper {
 
     private JDBCHelper() {
 
-        int connectPoolSize = ConfigurationManager.getInteger(Constants.CONNECT_POOL_SIZE);
+        int connectPoolSize = ConfigurationManager.getInteger(Constants.DB_CONNECTION_POOL_SIZE);
         String userName = ConfigurationManager.getProperty(Constants.JDBC_USER_NAME);
         String passWorld = ConfigurationManager.getProperty(Constants.JDBC_PASS_WORLD);
         String url = ConfigurationManager.getProperty(Constants.JDBC_URL);
