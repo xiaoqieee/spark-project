@@ -20,14 +20,19 @@ public class ConfigurationManager {
     }
 
     public static String getProperty(String key) {
-        return properties.getProperty(key);
+        String value = properties.getProperty(key);
+        if (null != value) {
+            return value;
+        }
+        throw new RuntimeException("必须配置:" + key);
     }
 
-    public static Integer getInteger(String key) {
+    public static int getInteger(String key) {
         String value = getProperty(key);
-        if (null != value) {
-            return Integer.valueOf(value);
-        }
-        return null;
+        return Integer.valueOf(value);
+    }
+
+    public static boolean getBoolean(String key) {
+        return Boolean.valueOf(getProperty(key));
     }
 }
