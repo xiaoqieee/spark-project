@@ -7,10 +7,9 @@ import java.util.Map;
  */
 public class ValidateUtils {
 
-    public boolean between(String data, String conditionStrings, String startColumn, String endColumn) {
-        if (StringUtils.isEmpty(data)) {
-            throw new RuntimeException("data 不能为空");
-        }
+    public static boolean between(String data, String conditionStrings, String startColumn, String endColumn) {
+        checkParam(data);
+
         Map<String, String> keyValueMap = StringUtils.toMap(conditionStrings);
         String start = keyValueMap.get(startColumn);
         String end = keyValueMap.get(endColumn);
@@ -23,10 +22,9 @@ public class ValidateUtils {
         return data.compareTo(start) >= 0 && data.compareTo(end) <= 0;
     }
 
-    public boolean in(String data, String conditionStrings, String columnName) {
-        if (StringUtils.isEmpty(data)) {
-            throw new RuntimeException("data 不能为空");
-        }
+    public static boolean in(String data, String conditionStrings, String columnName) {
+        checkParam(data);
+
         Map<String, String> keyValueMap = StringUtils.toMap(conditionStrings);
         String conditionValue = keyValueMap.get(columnName);
         if (StringUtils.isEmpty(conditionValue)) {
@@ -41,16 +39,21 @@ public class ValidateUtils {
         return false;
     }
 
-    public boolean eq(String data, String conditionStrings, String columnName) {
-        if (StringUtils.isEmpty(data)) {
-            throw new RuntimeException("data 不能为空");
-        }
+    public static boolean eq(String data, String conditionStrings, String columnName) {
+        checkParam(data);
+
         Map<String, String> keyValueMap = StringUtils.toMap(conditionStrings);
         String conditionValue = keyValueMap.get(columnName);
         if (StringUtils.isEmpty(conditionValue)) {
             return false;
         }
         return data.equals(conditionValue);
+    }
+
+    private static void checkParam(String data) {
+        if (StringUtils.isEmpty(data)) {
+            throw new RuntimeException("data 不能为空");
+        }
     }
 
 
