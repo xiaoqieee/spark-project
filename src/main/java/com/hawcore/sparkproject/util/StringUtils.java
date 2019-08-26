@@ -39,7 +39,7 @@ public class StringUtils {
         return trimSpecifiedCharacter(value, "\\|");
     }
 
-    public String toKeyValueString(Map<String, String> keyValues) {
+    public static String toKeyValueString(Map<String, String> keyValues) {
         StringBuffer sb = new StringBuffer();
         if (null != keyValues) {
             for (Map.Entry<String, String> entry : keyValues.entrySet()) {
@@ -49,7 +49,7 @@ public class StringUtils {
         return trimVerticalLine(sb.toString());
     }
 
-    public Map<String, String> toMap(String keyValueString) {
+    public static Map<String, String> toMap(String keyValueString) {
         Map<String, String> result = new HashMap<>(4);
         if (null != keyValueString) {
             String[] keyValueArr = keyValueString.split("\\|");
